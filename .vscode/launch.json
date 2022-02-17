@@ -10,6 +10,26 @@
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:8080",
             "webRoot": "${workspaceFolder}"
+        },
+        {
+            "name": "Attach to node",
+            "type": "node",
+            "request": "attach",
+            "restart": true,
+            "port": 8080
         }
+        // {
+        //     "name": "Launch app.js via nodemon",
+        //     "type": "pwa-chrome",
+        //     "request": "launch",
+        //     "runtimeExecutable": "nodemon",
+        //     "program": "${workspaceFolder}/app.js",
+        //     "console": "integratedTerminal",
+        //     "internalConsoleOptions": "neverOpen",
+        //     "cwd": "${workspaceRoot}",
+        //     "restart": true,
+        //     "url": "http://localhost:8080",
+        //     "webRoot": "${workspaceFolder}"
+        // }
     ]
 }

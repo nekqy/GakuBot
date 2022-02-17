@@ -4,8 +4,8 @@ export interface IText {
 export interface IPartOfSpeech {
     pos: string
 }
-export interface IMeaning extends IText {};
-export interface ISynonym extends IText {};
+export interface IMeaning extends IText { };
+export interface ISynonym extends IText { };
 export interface IExample extends IText {
     tr: IText[]
 }
@@ -21,22 +21,22 @@ export interface IDef extends IText, IPartOfSpeech {
 export class Word {
     value: string;
     def: IDef[]
-    
+
     constructor(value: string, def: IDef[]) {
         this.value = value = '';
         this.def = def;
-        
-        this.def.forEach(definition => { 
+
+        this.def.forEach(definition => {
             definition.text = definition.text || '';
             definition.pos = definition.pos || '';
-            
+
             if (!definition.tr) {
                 definition.tr = [];
             }
             definition.tr.forEach((translation: ITranslation) => {
                 translation.text = translation.text || '';
                 translation.pos = translation.pos || '';
-                
+
                 if (!translation.syn) {
                     translation.syn = [];
                 }
@@ -54,7 +54,7 @@ export class Word {
                 }
                 translation.ex.forEach((example: IExample) => {
                     example.text = example.text || '';
-                    
+
                     if (!example.tr) {
                         example.tr = [];
                     }
@@ -65,28 +65,28 @@ export class Word {
             });
         });
     }
-    
+
     getTranslations(): string {
         let result: string = '';
         let count = 0;
-        this.def.forEach(definition => { 
+        this.def.forEach(definition => {
             count++;
             result += count + '\\)\n';
             definition.tr.forEach((translation: ITranslation) => {
                 result += '*' + translation.text + '*';
-                
+
                 // result += '   synonyms: ';
                 // translation.syn.forEach((synonym: ISynonym) => {
                 //     result += synonym.text + ', ';
                 // });
                 // result += '\n';
-                
+
                 result += ' \\(';
                 translation.mean.forEach((mean: ISynonym) => {
                     result += '/' + mean.text.replace(/ /g, '\\_') + ', ';
                 });
                 result += '\\)\n';
-                
+
                 translation.ex.forEach((example: ISynonym) => {
                     result += '   ' + example.text + '\n';
                 });
