@@ -20,12 +20,16 @@ export interface IDef extends IText, IPartOfSpeech {
 
 export class Word {
     value: string;
-    def: IDef[]
+    def: IDef[];
+    pic: string | undefined;
 
-    constructor(value: string, def: IDef[]) {
+    constructor(value: string, def: IDef[], pic?: string) {
         this.value = value = '';
         this.def = def;
-
+        this.pic = pic;
+        this.normalize();
+    }
+    normalize() {
         this.def.forEach(definition => {
             definition.text = definition.text || '';
             definition.pos = definition.pos || '';

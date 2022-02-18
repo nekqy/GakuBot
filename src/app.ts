@@ -1,11 +1,9 @@
-import { Context, Telegraf, Markup, Telegram } from 'telegraf';
-import { MessageEntity, Update } from 'typegram';
-import { lookup } from './dictionary';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const token: string = process.env.BOT_TOKEN as string;
-const telegram: Telegram = new Telegram(token);
-const bot: Telegraf<Context<Update>> = new Telegraf(token as string, { handlerTimeout: 9_000_000 });
-const chatId: string = process.env.CHAT_ID as string;
+import { Bot } from './bot';
+import { config } from './config';
+const bot = Bot(config);
 
 bot.start((ctx) => {
     ctx.reply('Hello ' + ctx.from.first_name + '! enter some word.');
@@ -22,24 +20,6 @@ bot.help((ctx) => {
 // // Context shortcut
 //   ctx.leaveChat();
 // });
-bot.on('text', async (ctx) => {
-    let result: string = '';
-    const text = ctx.message.text.replace(/\//, '').replace(/\\_/g, ' ');
-    try {
-        result = await lookup(text) || 'not found :(';
-    } catch (err) {
-        console.error(err);
-        result = 'error :(';
-    }
-    ctx.reply(result, {
-        parse_mode: 'MarkdownV2',
-        // entities: [{
-        //   type: 'bot_command',
-        //   offset: 0,
-        //   length: 5
-        // }]
-    });
-});
 
 bot.launch();
 
